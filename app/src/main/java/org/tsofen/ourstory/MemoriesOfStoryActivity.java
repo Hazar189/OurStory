@@ -1,7 +1,14 @@
 package org.tsofen.ourstory;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -9,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,10 +41,10 @@ public class MemoriesOfStoryActivity extends AppCompatActivity {
     ArrayList<Memory> data;
     MemoryAdapter adapter;
     TextView story_name;
-    Long storyId,memoryId;
+    long storyId, memoryId;
     Memory memory;
-    int year,flag;
-    String storyName,tag;
+    int year, flag;
+    String storyName, tag;
     private ArrayList<Memory> memories;
 
     @Override
@@ -45,21 +53,27 @@ public class MemoriesOfStoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_memories);
         Intent intent = getIntent();
         tag = intent.getStringExtra("tag");
-        storyId= intent.getLongExtra("storyId",storyId);
-        memoryId= intent.getLongExtra("memoryId",memoryId);
-        storyName= intent.getStringExtra("storyName");
-        year= intent.getIntExtra("year",year);
-        flag = intent.getIntExtra("flag",flag);
-        rv = findViewById(R.id.recycler);
-        story_name = findViewById(R.id.storyname);
-        story_name.setText(storyName);
+        storyId = intent.getLongExtra("storyId", storyId);
+        memoryId = intent.getLongExtra("memoryId", memoryId);
+        storyName = intent.getStringExtra("storyName");
+        year = intent.getIntExtra("year", year);
+        flag = intent.getIntExtra("flag", flag);
+        rv = findViewById(R.id.recycler_mem);
+        story_name = findViewById(R.id.memoriestxt);
+        int story_name_color = ResourcesCompat.getColor(getResources(), R.color.colorLogin, getTheme());
+        Spannable spannable = new SpannableString(story_name.getText() + " " + storyName);
+        spannable.setSpan(new ForegroundColorSpan(story_name_color),
+                story_name.getText().length(),
+                story_name.getText().length() + 1 + storyName.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        story_name.setText(spannable, TextView.BufferType.SPANNABLE);
         MemoryAService = WebFactory.getService();
-        if(flag==0) {
+        if (flag == 0) {
             MemoryAService.GetMemoriesByYear(storyId, year).enqueue(new Callback<ArrayList<Memory>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Memory>> call, Response<ArrayList<Memory>> response) {
                     memories = response.body();
-                    adapter = new MemoryAdapter(MemoriesOfStoryActivity.this,memories);
+                    adapter = new MemoryAdapter(MemoriesOfStoryActivity.this, memories);
                     rv.setAdapter(adapter);
                     rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter.notifyDataSetChanged();
@@ -70,14 +84,12 @@ public class MemoriesOfStoryActivity extends AppCompatActivity {
 
                 }
             });
-        }
-
-        else if(flag==1){
+        } else if (flag == 1) {
             MemoryAService.GetMemoriesByTag(storyId, tag).enqueue(new Callback<ArrayList<Memory>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Memory>> call, Response<ArrayList<Memory>> response) {
                     memories = response.body();
-                    adapter = new MemoryAdapter(MemoriesOfStoryActivity.this,memories);
+                    adapter = new MemoryAdapter(getApplicationContext(), memories);
                     rv.setAdapter(adapter);
                     rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter.notifyDataSetChanged();
@@ -88,16 +100,14 @@ public class MemoriesOfStoryActivity extends AppCompatActivity {
 
                 }
             });
-        }
-        else
-        {
+        } else {
             MemoryAService.GetMemoryById(memoryId).enqueue(new Callback<Memory>() {
                 @Override
                 public void onResponse(Call<Memory> call, Response<Memory> response) {
                     memory = response.body();
                     ArrayList<Memory> memoryOne = new ArrayList<>();
                     memoryOne.add(memory);
-                    adapter = new MemoryAdapter(MemoriesOfStoryActivity.this,memoryOne );
+                    adapter = new MemoryAdapter(MemoriesOfStoryActivity.this, memoryOne);
                     rv.setAdapter(adapter);
                     rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter.notifyDataSetChanged();
@@ -112,10 +122,10 @@ public class MemoriesOfStoryActivity extends AppCompatActivity {
         }
 
         // search button
-        ImageButton btn = (ImageButton) findViewById(R.id.searchview);
-        btn.setOnClickListener(new View.OnClickListener(){
+        ImageButton btn = findViewById(R.id.searchview);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Intent myIntent = new Intent(MemoriesOfStoryActivity.this, SearchStory.class);
                 MemoriesOfStoryActivity.this.startActivity(myIntent);
             }

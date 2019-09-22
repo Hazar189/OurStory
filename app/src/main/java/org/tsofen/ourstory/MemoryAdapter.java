@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,18 +64,19 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Memory memory = mMemories.get(position);
         User user = memory.getUser();
-        if (memory.getUser().getProfilePicture() != null) {
-            Uri uri = Uri.parse(memory.getUser().getProfilePicture().toString());
-            RequestOptions options = new RequestOptions()
-                    .override(300, 300)
-                    .centerCrop()
-                    .placeholder(R.drawable.nopicyet)
-                    .error(R.drawable.nopicyet);
-            Glide.with(this.mInflater.getContext()).load(uri).apply(options).into(holder.pic);
-        } else {
-            holder.pic.setImageResource(R.drawable.defaultprofilepicture);
+        if (user != null) {
+            if (memory.getUser().getProfilePicture() != null) {
+                Uri uri = Uri.parse(memory.getUser().getProfilePicture());
+                RequestOptions options = new RequestOptions()
+                        .override(300, 300)
+                        .centerCrop()
+                        .placeholder(R.drawable.nopicyet)
+                        .error(R.drawable.nopicyet);
+                Glide.with(this.mInflater.getContext()).load(uri).apply(options).into(holder.pic);
+            } else
+                holder.pic.setImageResource(R.drawable.defaultprofilepicture);
+            holder.name.setText(memory.getUser().getFullName());
         }
-        holder.name.setText(memory.getUser().getFirstName()+" "+memory.getUser().getLastName());
         holder.commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,45 +95,44 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
                 sendIntent.setType("text/plain");
 
-                Intent shareIntent = Intent.createChooser(sendIntent,null);
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
 
                 ctx.startActivity(shareIntent);
             }
         });
-     if(memory.getDescription()!=null) {
-         holder.descr.setText(memory.getDescription());
-     }
-     if(memory.getLocation()!=null)
-     {
-         holder.location.setWidth(calculateWidth(memory.getLocation()));
-         holder.location.setText(memory.getLocation());
-     }
-     if(memory.getFeeling()!=null)
-     {
-         holder.feeling.setWidth(calculateWidth("#"+memory.getFeeling()));
-         holder.feeling.setText("#"+memory.getFeeling());
-     }
+        if (memory.getDescription() != null) {
+            holder.descr.setText(memory.getDescription());
+        }
+        if (memory.getLocation() != null) {
+            holder.location.setWidth(calculateWidth(memory.getLocation()));
+            holder.location.setText(memory.getLocation());
+        }
+        if (memory.getFeeling() != null) {
+//         holder.feeling.setWidth(calculateWidth("#"+memory.getFeeling()));
+            holder.feeling.setText("#" + memory.getFeeling());
+        }
         String[] monthNames = {" ", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         if (memory.getMemoryDate() != null) {
-            String memDate = monthNames[memory.getMemoryDate().get(Calendar.MONTH)+1] + " " + memory.getMemoryDate().get(Calendar.DAY_OF_MONTH) + " , " + (memory.getMemoryDate().get(Calendar.YEAR));
-           holder.mem_date.setWidth(calculateWidth(memDate));
+            String memDate = monthNames[memory.getMemoryDate().get(Calendar.MONTH) + 1] + " " + memory.getMemoryDate().get(Calendar.DAY_OF_MONTH) + ", " + (memory.getMemoryDate().get(Calendar.YEAR));
+//           holder.mem_date.setWidth(calculateWidth(memDate));
             holder.mem_date.setText(memDate);
+            Log.d("MOO", "MemDate: " + memDate);
         } else
             holder.mem_date.setVisibility(View.INVISIBLE);
         if (memory.getLikes() != null) {
-           holder.num_of_likes.setText(memory.getLikes().size()+"");
+            holder.num_of_likes.setText(memory.getLikes().size() + "");
         } else {
             holder.num_of_likes.setVisibility(View.INVISIBLE);
         }
-       if(memory.getComments()!=null) {
-           holder.num_of_comments.setText(memory.getComments().size()+"");
-       } else {
-           holder.num_of_comments.setVisibility(View.INVISIBLE);
-       }
+        if (memory.getComments() != null) {
+            holder.num_of_comments.setText(memory.getComments().size() + "");
+        } else {
+            holder.num_of_comments.setVisibility(View.INVISIBLE);
+        }
         if (memory.getTags() != null) {
             String s = "";
             for (Tag tag : memory.getTags()) {
-                s += "#" +tag.getLabel();
+                s += "#" + tag.getLabel();
             }
             holder.tags.setText(s);
         } else
@@ -168,7 +169,7 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.ViewHolder
             super(itemView);
             rvMemory = itemView.findViewById(R.id.memory_pic);
             commentbtn = itemView.findViewById(R.id.commentbtn2);
-            sharebtn=itemView.findViewById(R.id.sharebtn2);
+            sharebtn = itemView.findViewById(R.id.sharebtn2);
             feeling = itemView.findViewById(R.id.feelingtxt);
             location = itemView.findViewById(R.id.locationtxt);
             name = itemView.findViewById(R.id.name_txt_person);
