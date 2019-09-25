@@ -120,6 +120,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="7dp"
                     android:background="@drawable/background_gradient"
+                    android:capitalize="words"
                     android:fontFamily="@font/quicksand_bold"
                     android:text="First Name"
                     android:textColor="@color/colorGrayHint"
@@ -204,7 +205,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/birthTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColor"
+                        android:text="Birth date is: "
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/showBirthDate"
@@ -213,6 +226,7 @@
                         android:calendarTextColor="@color/colorGrayHint"
                         android:text=""
                         android:textSize="@dimen/textSize" />
+                </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -274,7 +288,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="12dp" >
+                    android:layout_marginTop="8dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/deathTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrayHint"
+                        android:text="Death date is: "
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/showDeathDate"
@@ -283,6 +309,7 @@
                         android:calendarTextColor="@color/colorGrayHint"
                         android:textSize="@dimen/textSize"
                         android:text="" />
+                </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -339,7 +366,7 @@
                 android:id="@+id/add_profile_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/quicksand_bold"
                 android:text="@string/add_profile"
                 android:textColor="@color/colorGrayHint"
@@ -349,7 +376,7 @@
                 android:id="@+id/profilePic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="add profile picture image view"
                 android:onClick="pickPic"
                 app:layout_constraintTop_toBottomOf="@+id/add_profile_picture"

@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,10 +20,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +32,6 @@ import com.google.gson.Gson;
 
 import org.tsofen.ourstory.FirebaseImageWrapper;
 import org.tsofen.ourstory.R;
-import org.tsofen.ourstory.StoryTeam.CreateStory;
 import org.tsofen.ourstory.UserModel.AppHomePage;
 import org.tsofen.ourstory.UserModel.LogIn;
 import org.tsofen.ourstory.model.Feeling;
@@ -51,7 +47,6 @@ import org.tsofen.ourstory.web.WebFactory;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -111,7 +106,7 @@ public class CreateEditMemoryActivity extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE);
         Gson gson = new Gson();
-        String userStr = preferences.getString("myUser", "ERR");
+        String userStr = preferences.getString(AppHomePage.USER, "ERR");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_edit_memory);
 
@@ -287,7 +282,8 @@ public class CreateEditMemoryActivity extends AppCompatActivity implements View.
             tagAdapter.tags.addAll(memory.getTags());
             tagAdapter.notifyDataSetChanged();
         }
-
+       // /*Story*/ story = (Story) intent.getSerializableExtra(KEY_CREATE);
+        //please replace line 270 with line above - 269
         Story story = (Story) intent.getSerializableExtra(KEY_CREATE);
         if (story != null) {
             memory.setStory(story);
@@ -443,6 +439,8 @@ public class CreateEditMemoryActivity extends AppCompatActivity implements View.
             return false;
         }
         if ((!checked1 && checked2 && !checked3) || (checked1 && checked2 && !checked3)) {
+            error3.setText("invalid date");
+            error3.setVisibility(View.VISIBLE);
             return false;
         }
         if (editTextLocation.toString() != null) {
@@ -662,10 +660,20 @@ public class CreateEditMemoryActivity extends AppCompatActivity implements View.
                             return service.SetMediaToMemory(memId, hm);
                         })
                         .subscribe(finalResult -> {
+                            if (finalResult == null)
+                                finish();
                             intent.putExtra(KEY_MEMID, finalResult.getId());
+                            intent.putExtra("id", Long.toString(memory.getStory().getStoryId()));
                             setResult(RESULT_OK, intent);
                             finish();
-                        });
+
+                            //please replace finish with lines below
+
+                           // Intent intent1 = new Intent(CreateEditMemoryActivity.this , ViewStory.class);
+                          //  intent1.putExtra("id",Long.toString(story.getStoryId()));
+                          //  startActivity(intent1);
+
+                        }, throwable -> finish());
 
             } else {
                 memory.getPictures().clear();
@@ -687,35 +695,7 @@ public class CreateEditMemoryActivity extends AppCompatActivity implements View.
                             intent.putExtra(KEY_MEMID, finalResult.getId());
                             setResult(RESULT_OK, intent);
                             finish();
-                        });
-//                service.EditMemory(memory.getId(), memory).enqueue(new Callback<Memory>() {
-//                    @Override
-//                    public void onResponse(Call<Memory> call, Response<Memory> response) {
-//                        HashMap<String, List<String>> hm = new HashMap<>();
-//                        hm.put("pictures", pictures);
-//                        hm.put("videos", videos);
-//                        hm.put("tags", tags);
-//
-////                        service.SetMediaToMemory(memory.getId(), hm).enqueue(new Callback<Memory>() {
-////                            @Override
-////                            public void onResponse(Call<Memory> call, Response<Memory> response) {
-////                                intent.putExtra(KEY_MEMID, memory.getId());
-////                                setResult(RESULT_OK, intent);
-////                                finish();
-////                            }
-////
-////                            @Override
-////                            public void onFailure(Call<Memory> call, Throwable t) {
-////
-////                            }
-////                        });
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Memory> call, Throwable t) {
-//
-//                    }
-//                });
+                        }, throwable -> finish());
             }
         });
 

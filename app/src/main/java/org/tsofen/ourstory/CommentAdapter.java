@@ -1,6 +1,7 @@
 package org.tsofen.ourstory;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import org.tsofen.ourstory.model.Comment;
-import org.tsofen.ourstory.model.api.Owner;
+import org.tsofen.ourstory.model.api.User;
 import org.tsofen.ourstory.web.OurStoryService;
 
 import java.util.List;
@@ -22,7 +26,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     OurStoryService user_comment;
     Context ctx;
     LayoutInflater mInflater;
-    Owner user;
+    User user;
 
     public CommentAdapter(Context context, List<Comment> comments) {
         this.comments = comments;
@@ -75,9 +79,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.name.setText((comment.getUser().getFullName()));
         }
         if (comment.getUser().getProfilePicture() != null) {
-            holder.profile.setImageResource(R.drawable.profilepic);
+            Uri uri = Uri.parse(comment.getUser().getProfilePicture().toString());
+            RequestOptions options = new RequestOptions()
+                    .override(300, 300)
+                    .centerCrop()
+                    .placeholder(R.drawable.nopicyet)
+                    .error(R.drawable.nopicyet);
+            Glide.with(this.mInflater.getContext()).load(uri).apply(options).into(holder.profile);
         }
-////            holder.profile.setImageResource(R.drawable.defaultprofilepicture);
+        else
+        {
+            holder.profile.setImageResource(R.drawable.defaultprofilepicture);
+        }
     }
 
     @Override

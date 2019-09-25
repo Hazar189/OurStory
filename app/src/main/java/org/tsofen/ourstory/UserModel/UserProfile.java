@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import org.tsofen.ourstory.R;
 import org.tsofen.ourstory.model.api.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -97,7 +98,10 @@ public class UserProfile extends Fragment {
             lName.setText(profileUser.getLastName());
         if (profileUser.getDateOfBirth() != null) {
             Date date = profileUser.getDateOfBirth();
-            dOfBirth.setText(profileUser.getDateOfBirth().toString());
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String userDate = simpleDateFormat.format(date);
+            dOfBirth.setText(userDate);
         }
         if (profileUser.getGender() != null)
             gender.setText(profileUser.getGender());
@@ -121,24 +125,3 @@ public class UserProfile extends Fragment {
 
 
 
-        /*fName.setText(UsersList.usersList.get(userIn).getmFirstName());
-
-        lName.setText(UsersList.usersList.get(userIn).getmLastName());
-
-        dOfBirth.setText(UsersList.usersList.get(userIn).getmDateOfBirth());
-
-        gender.setText(UsersList.usersList.get(userIn).getmGender());
-
-        state.setText(UsersList.usersList.get(userIn).getmState());
-        city.setText(UsersList.usersList.get(userIn).getmCity());
-
-        email.setText(UsersList.usersList.get(userIn).getmEmail());
-
-         pictureUri = Uri.parse(UsersList.usersList.get(userIn).getmProfilePicture());
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.drawable.defaultprofilepicture)
-                .error(R.drawable.defaultprofilepicture);
-
-
-        Glide.with(this).load(pictureUri).apply(options).into(pic);*/

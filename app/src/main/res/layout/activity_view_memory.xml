@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="51.33dp"
+            android:layout_height="23.85dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ourstory_logo" />
+
+        <TextView
+            android:id="@+id/memoryOf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="104dp"
+            android:layout_marginLeft="104dp"
+            android:layout_marginBottom="16dp"
+            android:text="Memory of"
+            android:textColor="@color/colorWhite"
+            android:textSize="21sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/nameS"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingLeft="5dp"
+            android:text="name"
+            android:textColor="@color/colorLogin"
+            android:textSize="21sp"
+            app:layout_constraintBottom_toBottomOf="@+id/memoryOf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintStart_toEndOf="@+id/memoryOf"
+            app:layout_constraintTop_toTopOf="@+id/memoryOf"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:layout_marginTop="100dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/header_layout">
+
+        <ImageButton
+            android:id="@+id/likebtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@color/colorPrimaryDark"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/like" />
+
+        <ImageView
+            android:id="@+id/picture_person"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.065"
+            app:srcCompat="@drawable/alex" />
+
+        <TextView
+            android:id="@+id/feelingtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="#FEELING"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/memory_date" />
+
+        <TextView
+            android:id="@+id/locationtxt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="@string/location"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/descr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picture_person" />
+
+        <TextView
+            android:id="@+id/name_txt_person"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/quicksand_bold"
+
+            android:text="Name"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/picture_person"
+            app:layout_constraintStart_toEndOf="@+id/picture_person"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.446" />
+
+        <TextView
+            android:id="@+id/memory_date"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="end"
+            android:text="date"
+            android:textAlignment="textEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/name_txt_person"
+            app:layout_constraintTop_toTopOf="@+id/name_txt_person" />
+
+        <ImageButton
+            android:id="@+id/commentbtn2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@color/colorPrimaryDark"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/likebtn"
+            app:layout_constraintTop_toTopOf="@+id/likebtn"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/comment" />
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="414dp"
+            android:layout_height="520dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/sharebtn2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            android:background="@color/colorPrimaryDark"
+            android:onClick="shareMyMemories"
+            app:layout_constraintStart_toEndOf="@+id/commentbtn2"
+            app:layout_constraintTop_toTopOf="@+id/commentbtn2"
+            app:srcCompat="@drawable/sharenew" />
+
+        <TextView
+            android:id="@+id/likesNum"
+            android:layout_width="22dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="24dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:text="15"
+            android:textColor="@color/colorLogin"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/commentbtn2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/likebtn" />
+
+        <TextView
+            android:id="@+id/commentNum"
+            android:layout_width="22dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+
+            android:fontFamily="@font/quicksand_bold"
+            android:text="9"
+            android:textColor="@color/colorLogin"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/likesNum" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/memory_pic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:clipToPadding="false"
+            android:padding="@dimen/ef_spacing"
+            android:paddingHorizontal="12dp"
+            app:layout_constraintBottom_toTopOf="@id/tags_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.875"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descr" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/descr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="start"
+
+            android:text="Description about this memory"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+
+            android:textStyle="bold"
+            app:colorClickableText="@color/colorGrayHint"
+            app:layout_constraintEnd_toEndOf="@+id/background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picture_person"
+            app:trimCollapsedText="@string/showMore"
+            app:trimExpandedText="@string/showLess"
+            app:trimLength="120"
+            app:trimMode="trimModeLength" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/tags_text"
+            android:layout_width="380dp"
+            android:layout_height="45dp"
+            android:background="@drawable/edit_round3"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center_vertical"
+            android:text="#TAG"
+            android:textColor="@color/colorName"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:colorClickableText="@color/colorGrayHint"
+            app:layout_constraintBottom_toTopOf="@+id/sharebtn2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.258"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/memory_pic"
+            app:layout_constraintVertical_bias="0.7"
+            app:trimCollapsedText="@string/showMore"
+            app:trimExpandedText="@string/showLess"
+            app:trimLength="35"
+            app:trimMode="trimModeLength" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

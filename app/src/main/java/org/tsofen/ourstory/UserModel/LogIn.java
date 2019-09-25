@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,8 +48,7 @@ public class LogIn extends AppCompatActivity {
     SharedPreferences mPrefs ;
     SharedPreferences.Editor prefsEditor;
     CheckBox keeplog ;
-
-org.tsofen.ourstory.model.api.User myUser;
+    org.tsofen.ourstory.model.api.User myUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -100,13 +98,12 @@ org.tsofen.ourstory.model.api.User myUser;
                     myUser = response.body();
                     if(myUser==null)
 
-                    Toast.makeText(getApplicationContext(),   "The email or password you entered is incorrect!",
-                            Toast.LENGTH_SHORT).show();
+                   Log.d("incorrect","incorrect");
                     else {
                         userId = myUser.getUserId();
 
-                        userPass = myUser.getPassword();
-                        if (userPass.equals(inputPassword)) {
+//                        userPass = myUser.getPassword();
+//                        if (userPass.equals(inputPassword)) {
                             UserStatusCheck.setUserStatus("not a visitor");
                             //TODO move the user id to the home page and then move it to create story intent (move it under name=("userId"))
                             //
@@ -117,23 +114,24 @@ org.tsofen.ourstory.model.api.User myUser;
                             //signInDone.putExtra("index", index);
                             Gson gson = new Gson();
                             String json = gson.toJson(myUser);
-                            prefsEditor.putString(AppHomePage.USER, json);
-                            prefsEditor.commit();
+
                             if (keeplog.isChecked()) {
-                                Log.d("what",mPrefs.getString(AppHomePage.USER,""));}
+                                Log.d("what", mPrefs.getString(AppHomePage.USER, ""));
+                                prefsEditor.putString(AppHomePage.USER, json);
+                                prefsEditor.commit();
+                            }
                             else
                                 {
-                                    prefsEditor.clear();
-                                    prefsEditor.commit();
                                 signInDone.putExtra("myUserJson", json);
                             }
                             UserStatusCheck.setUserStatus("not a visitor");
+                            AppHomePage.user2=json;
                             passErr.setVisibility(View.INVISIBLE);
                             startActivity(signInDone);
 
                         }
                     }
-                }//end of onResponse method
+                //end of onResponse method
                 @Override
                 public void onFailure(Call<org.tsofen.ourstory.model.api.User> call, Throwable t) {
                     passErr.setVisibility(View.VISIBLE);

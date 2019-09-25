@@ -63,13 +63,14 @@ public class MyMemories extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (getActivity() == null) return;
         Gson gson = new Gson();
         pr = getContext().getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE);
         String userJsonString = pr.getString(AppHomePage.USER, "ERROR");
         sendUserIntent = userJsonString.equals("ERROR");
-        if (!userJsonString.equals("ERROR") || parent.user2 != null && parent.user2.length() > 0) {
+        if (!userJsonString.equals("ERROR") || AppHomePage.user2 != null && AppHomePage.user2.length() > 0) {
             User userObj = userJsonString.equals("ERROR") ?
-                    gson.fromJson(parent.user2, User.class) :
+                    gson.fromJson(AppHomePage.user2, User.class) :
                     gson.fromJson(userJsonString, User.class);
             user_id = userObj.getUserId();
             rv = view.findViewById(R.id.recycler);
@@ -77,8 +78,9 @@ public class MyMemories extends Fragment {
             MemoryAService.GetMemoriesByUser(user_id).enqueue(new Callback<ArrayList<Memory>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Memory>> call, Response<ArrayList<Memory>> response) {
+                    if (getActivity() == null) return;
                     memories = response.body();
-                    adapter = new MyMemoriesAdapter(getActivity(), memories, userObj);
+                    adapter = new MyMemoriesAdapter(getActivity().getApplicationContext(), memories, userObj, rv);
                     rv.setAdapter(adapter);
                     rv.setLayoutManager(new LinearLayoutManager(getContext()));
                     adapter.notifyDataSetChanged();

@@ -3,17 +3,17 @@ package org.tsofen.ourstory.web;
 
 import org.tsofen.ourstory.model.Comment;
 import org.tsofen.ourstory.model.Memory;
+import org.tsofen.ourstory.model.Tag;
 import org.tsofen.ourstory.model.api.CommentA;
 import org.tsofen.ourstory.model.api.FullViewStory;
+import org.tsofen.ourstory.model.api.Like;
 import org.tsofen.ourstory.model.api.ListOfStory;
-import org.tsofen.ourstory.model.api.Owner;
 import org.tsofen.ourstory.model.api.Story;
 import org.tsofen.ourstory.model.api.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
@@ -28,10 +28,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface OurStoryService {
-    @FormUrlEncoded
     @Headers("Content-Type: application/json")
     @POST("comments/create/{id}")
     Call<Comment> newComment(@Path("id") long id, @Body Comment comment);
+
+ @POST("likes/create/{id}")
+ Call<Like> addLike(@Path("id") long id, @Body Like like);
     @GET("memories/getUserMemories/{id}")
     Call<ArrayList<Memory>> GetMemoriesByUser(@Path("id") long id);
     @GET("memories/story/{story}/findMemoriesByTag/{tag}")
@@ -42,11 +44,11 @@ public interface OurStoryService {
     Call<ArrayList<CommentA>> GetCommentbyId(@Path("id") long id);
     @Headers({"Content-Type: application/json"})
     @DELETE("memories/delete/{id}")
-    Call<Object> DeleteMemory(@Path("id") long id);
+    Call<Void> DeleteMemory(@Path("id") long id);
     @POST("stories/create")
     Call<Story> CreateStory(@Body Story story);
     @GET("users/findById/{id}")
-    Call<Owner> GetUserById(@Path("id") long id);
+    Call<User> GetUserById(@Path("id") long id);
     @GET("stories/findStoriesByKeyword/")
     Call<ArrayList<ListOfStory>> GetStoriesByName(@Query("name") String n);
 
@@ -62,6 +64,10 @@ public interface OurStoryService {
 
     @PUT("memories/update/{id}")
     Observable<Memory> EditMemory(@Path("id") long id, @Body Memory memory);
+
+    @GET("tags/findAll")
+    Call<List<Tag>> GetAllTags();
+
     @GET("users/login")
     Call<User> login(@Query("mail")String email,@Query("password") String password);
 
@@ -79,8 +85,8 @@ public interface OurStoryService {
     @GET("stories/ViewStoryFull/{id}")
     Call<FullViewStory> GetFullViewStoryById(@Path("id") long id);
 
-    @GET("memories/findMemoriesByKeyword/{description}")
-    Call<ArrayList<Memory>> GetMemoriesByKeyword(@Path("description") String description);
+    @GET("memories/findMemoriesByKeyword/")
+    Call<ArrayList<Memory>> GetMemoriesByKeyword(@Query("description") String description);
 
 
     @GET("stories/findStoriesByDobYearMonth")

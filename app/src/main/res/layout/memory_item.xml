@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/background"
             android:layout_width="414dp"
-            android:layout_height="550dp"
+            android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
             android:clickable="false"
@@ -105,13 +105,14 @@
             android:id="@+id/memory_pic"
             android:layout_width="0dp"
             android:layout_height="201dp"
+            android:layout_margin="12dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:foregroundGravity="center"
+            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descr"
             app:layout_constraintVertical_bias="0.035" />
@@ -127,21 +128,6 @@
             app:layout_constraintTop_toTopOf="@+id/likebtn"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/comment" />
-
-        <TextView
-            android:id="@+id/commentNum"
-            android:layout_width="22dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginBottom="32dp"
-
-            android:fontFamily="@font/quicksand_bold"
-            android:text="9"
-            android:textColor="@color/colorLogin"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/likesNum" />
 
         <ImageButton
             android:id="@+id/likebtn"
@@ -159,12 +145,27 @@
             app:srcCompat="@drawable/like" />
 
         <TextView
+            android:id="@+id/commentNum"
+            android:layout_width="22dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginBottom="20dp"
+
+            android:fontFamily="@font/quicksand_bold"
+            android:text="9"
+            android:textColor="@color/colorLogin"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/likesNum" />
+
+        <TextView
             android:id="@+id/likesNum"
             android:layout_width="22dp"
             android:layout_height="17dp"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="@font/quicksand_bold"
             android:text="15"
             android:textColor="@color/colorLogin"
@@ -188,15 +189,17 @@
         <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/tags_text"
             android:layout_width="380dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginTop="224dp"
             android:background="@drawable/edit_round3"
             android:fontFamily="@font/quicksand_bold"
             android:gravity="center_vertical"
+            android:paddingLeft="5dp"
             android:text="#TAG"
             android:textColor="@color/colorName"
-            android:textSize="26sp"
+            android:textSize="18sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:colorClickableText="@color/colorGrayHint"
             app:layout_constraintBottom_toTopOf="@+id/sharebtn2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -205,7 +208,7 @@
             app:layout_constraintTop_toBottomOf="@+id/descr"
             app:trimCollapsedText="@string/showMore"
             app:trimExpandedText="@string/showLess"
-            app:trimLength="17"
+            app:trimLength="35"
             app:trimMode="trimModeLength" />
 
         <com.borjabravo.readmoretextview.ReadMoreTextView
